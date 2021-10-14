@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.viewinterop.AndroidView
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -93,10 +94,12 @@ fun MyScreenExample02() {
             }
         }
 
-        val context = LocalContext.current
-        TextView(context).apply {
 
-        }
+        AndroidView(factory = {
+            TextView(it).apply {
+                text = "Hello from View system"
+            }
+        })
     }
 
 
