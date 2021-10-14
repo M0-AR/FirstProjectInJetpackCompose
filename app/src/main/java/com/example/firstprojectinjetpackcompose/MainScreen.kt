@@ -71,12 +71,6 @@ fun MyScreenExample02() {
         viewModel.addCurrency("RON")
 
 
-        /*Button(onClick = {
-            viewModel.addCurrency("Fun")
-            viewModel.addCrypto("cryptoFun")
-        }) {
-            Text("Add currency")
-        }*/
 
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Button(onClick = {
