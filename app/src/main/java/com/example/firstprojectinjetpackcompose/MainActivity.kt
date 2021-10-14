@@ -3,6 +3,7 @@ package com.example.firstprojectinjetpackcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -17,7 +18,7 @@ class MainActivity : ComponentActivity() {
             FirstProjectInJetpackComposeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
+                    MyScreen()
                 }
             }
         }
@@ -25,19 +26,24 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MyScreen(name: String) {
+fun MyScreen() {
     Box {
         Text("First Text")
         Text("Second Text")
     }
+    // var textState by remember { mutableStateOf("" }
+    // TextField(value = textState, onValueChange = {})
 }
 
-fun
+@Composable
+fun MyTextField() {
+
+}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     FirstProjectInJetpackComposeTheme {
-        Greeting("Android")
+        MyScreen()
     }
 }
