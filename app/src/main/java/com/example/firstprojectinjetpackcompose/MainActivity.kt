@@ -1,13 +1,13 @@
 package com.example.firstprojectinjetpackcompose
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.TextField
+import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.firstprojectinjetpackcompose.ui.theme.FirstProjectInJetpackComposeTheme
 
@@ -27,12 +27,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyScreen() {
-    Box {
-        Text("First Text")
-        Text("Second Text")
-    }
-    // var textState by remember { mutableStateOf("" }
-    // TextField(value = textState, onValueChange = {})
+    var textState by remember { mutableStateOf("" )}
+
+    TextField(value = textState, onValueChange = {
+        Log.d("textState", "$it")
+        textState = it
+    })
 }
 
 @Composable
