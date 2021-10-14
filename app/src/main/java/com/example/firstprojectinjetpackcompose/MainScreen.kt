@@ -1,8 +1,8 @@
 package com.example.firstprojectinjetpackcompose
 
 import android.util.Log
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import android.widget.TextView
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -13,8 +13,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.firstprojectinjetpackcompose.ui.theme.FirstProjectInJetpackComposeTheme
 import androidx.compose.material.TextFieldDefaults
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 @Composable
@@ -22,28 +27,81 @@ fun MyScreenExample02() {
     val viewModel = MainViewModel()
 
 
-/*    Column {
-        // Display the list without RecycleView
-        viewModel.listOfCurrencies.forEach {
-            Text(text = it)
-        }
-    }*/
+    Column(
+        Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
 
-    LazyColumn {
+    ) {
+        // Display the list without RecycleView
+        /*viewModel.listOfCurrencies.forEach {
+            Text(text = it)
+        }*/
+        val coroutineScope = rememberCoroutineScope()
+
+        LazyColumn {
 
           // Display the list with RecycleView
-//        items(viewModel.listOfCurrencies) {
-//            Text(text = it)
-//            Text(text = it)
-//        }
+/*        items(viewModel.listOfCurrencies) {
+            Text(text = it)
+            Text(text = it)
+        }*/
 
 
-        // Display the list with RecycleView by index and item
-        itemsIndexed(viewModel.listOfCurrencies) { index, item ->
-            Text("Item at index $index is $item")
+            // Display the list with RecycleView by index and item
+            itemsIndexed(viewModel.listOfCurrencies) { index, item ->
+                Text("Item at index $index is $item")
+            }
+
         }
 
+        val cryptos by viewModel.listOfCryptos.collectAsState()  // collectAsState -> when getting a state converting to a Composable state
+        var cryptoState  by remember { mutableStateOf(listOf<String>())}
+        viewModel.listOfCryptos
+            .onEach {
+                cryptoState = it
+            }
+            .launchIn(coroutineScope)
+
+        LazyColumn(Modifier.padding(top = 20.dp)) {
+            items(items = cryptos) {
+                Text(it)
+            }
+        }
+
+
+        viewModel.addCurrency("RON")
+
+
+        /*Button(onClick = {
+            viewModel.addCurrency("Fun")
+            viewModel.addCrypto("cryptoFun")
+        }) {
+            Text("Add currency")
+        }*/
+
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Button(onClick = {
+                viewModel.addCurrency("Fun")
+            }) {
+                Text("Add currency")
+            }
+
+            Button(onClick = {
+                viewModel.addCrypto("cryptoFun")
+            }) {
+                Text("Add Crypto")
+            }
+        }
+
+        val context = LocalContext.current
+        TextView(context).apply {
+
+        }
     }
+
+
+
+
 }
 
 @Composable
